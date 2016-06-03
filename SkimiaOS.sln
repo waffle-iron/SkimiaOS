@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkimiaOS.CLI.ServerConsole", "SkimiaOS.CLI.ServerConsole\SkimiaOS.CLI.ServerConsole.csproj", "{0179F439-9436-48BA-BF30-03D11DBFCD07}"
+	ProjectSection(ProjectDependencies) = postProject
+		{261840EE-B065-43BF-BB99-F74036A9C30C} = {261840EE-B065-43BF-BB99-F74036A9C30C}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkimiaOS.Server.BaseServer", "SkimiaOS.Server.BaseServer\SkimiaOS.Server.BaseServer.csproj", "{16C7DBAA-41C6-44EE-B8CB-70F4CCC498B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkimiaOS.Server.APIServer", "SkimiaOS.Server.APIServer\SkimiaOS.Server.APIServer.csproj", "{03131379-C1EF-425F-A133-847CA6A9530B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkimiaOS.Core", "SkimiaOS.Core\SkimiaOS.Core.csproj", "{EC156DFA-45C5-4624-9011-EE8E36F4F0EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{7B13D593-870C-489B-A374-822EFD64012E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkimiaOS.Plugins.BasePlugin", "Plugins\SkimiaOS.Plugins.BasePlugin\SkimiaOS.Plugins.BasePlugin.csproj", "{261840EE-B065-43BF-BB99-F74036A9C30C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0179F439-9436-48BA-BF30-03D11DBFCD07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0179F439-9436-48BA-BF30-03D11DBFCD07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0179F439-9436-48BA-BF30-03D11DBFCD07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0179F439-9436-48BA-BF30-03D11DBFCD07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16C7DBAA-41C6-44EE-B8CB-70F4CCC498B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16C7DBAA-41C6-44EE-B8CB-70F4CCC498B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16C7DBAA-41C6-44EE-B8CB-70F4CCC498B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16C7DBAA-41C6-44EE-B8CB-70F4CCC498B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03131379-C1EF-425F-A133-847CA6A9530B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03131379-C1EF-425F-A133-847CA6A9530B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03131379-C1EF-425F-A133-847CA6A9530B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03131379-C1EF-425F-A133-847CA6A9530B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC156DFA-45C5-4624-9011-EE8E36F4F0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC156DFA-45C5-4624-9011-EE8E36F4F0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC156DFA-45C5-4624-9011-EE8E36F4F0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC156DFA-45C5-4624-9011-EE8E36F4F0EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{261840EE-B065-43BF-BB99-F74036A9C30C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{261840EE-B065-43BF-BB99-F74036A9C30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{261840EE-B065-43BF-BB99-F74036A9C30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{261840EE-B065-43BF-BB99-F74036A9C30C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{261840EE-B065-43BF-BB99-F74036A9C30C} = {7B13D593-870C-489B-A374-822EFD64012E}
+	EndGlobalSection
+EndGlobal
