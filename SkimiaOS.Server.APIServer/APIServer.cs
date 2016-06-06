@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin.Hosting;
 using SkimiaOS.Core.Config;
+using SkimiaOS.Server.APIServer.Messages;
 using SkimiaOS.Server.APIServer.OWIN;
 using SkimiaOS.Server.BaseServer;
 using System;
@@ -40,6 +41,11 @@ namespace SkimiaOS.Server.APIServer
                 this.logger.Info("Initialisation...");
                 base.InitializationManager.InitializeAll();
                 base.IsInitialized = true;
+
+                var msg = new APIServerInitializationMessage();
+                DispatcherTask.Dispatcher.Enqueue(msg);
+
+                msg.Wait();
 
             }
 			catch (Exception ex)

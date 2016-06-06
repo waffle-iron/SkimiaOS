@@ -18,6 +18,8 @@ using System.Threading;
 using SkimiaOS.Server.BaseServer.Commands;
 using SkimiaOS.Core.Mathematics;
 using SkimiaOS.Server.BaseServer.Initialization;
+using SkimiaOS.Core.Messages;
+using SkimiaOS.Server.BaseServer.Messages;
 
 namespace SkimiaOS.Server.BaseServer
 {
@@ -50,6 +52,11 @@ namespace SkimiaOS.Server.BaseServer
         {
             get;
             protected set;
+        }
+        public DispatcherTask DispatcherTask
+        {
+            get;
+            private set;
         }
         public ConsoleBase ConsoleInterface
         {
@@ -197,6 +204,14 @@ namespace SkimiaOS.Server.BaseServer
                 this.Config.Load();
             }
 
+
+            this.logger.Info("Register Assemblies in Dispatcher");
+            foreach (Assembly assembly in this.LoadedAssemblies.Values.ToArray<Assembly>())
+            {
+                MessageDispatcher.RegisterSharedAssembly(assembly);
+            }
+
+
             this.logger.Info("Initialize Task Pool");
             this.IOTaskPool = new SelfRunningTaskPool(ServerBase.IOTaskInterval, "IO Task Pool");
 
@@ -214,6 +229,15 @@ namespace SkimiaOS.Server.BaseServer
             Singleton<PluginManager>.Instance.LoadAllPlugins();
 
             this.CommandManager.LoadOrCreateCommandsInfo(ServerBase.CommandsInfoFilePath);
+
+            this.logger.Info("Starting Dispatcher...");
+            DispatcherTask = new DispatcherTask(new MessageDispatcher());
+            DispatcherTask.Start(); // we have to start it now to dispatch the initialization msg
+
+            var msg = new BaseServerInitializationMessage();
+            DispatcherTask.Dispatcher.Enqueue(msg);
+
+            msg.Wait();
         }
 
         public virtual void UpdateConfigFiles()

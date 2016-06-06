@@ -1,4 +1,5 @@
 ﻿using SkimiaOS.Core.Config;
+using SkimiaOS.Core.Messages;
 using SkimiaOS.Core.Reflection;
 using SkimiaOS.Server.BaseServer.Commands;
 using SkimiaOS.Server.BaseServer.Initialization;
@@ -67,7 +68,7 @@ namespace SkimiaOS.Server.BaseServer.Plugins
         public virtual void Initialize()
         {
             //place l'initialisation de lassembly dans tout les managers
-
+            MessageDispatcher.RegisterSharedAssembly(Context.PluginAssembly);
             Singleton<InitializationManager>.Instance.AddAssembly(this.Context.PluginAssembly);
             if (ServerBase.InstanceAsBase.IsInitialized)
             {
@@ -79,7 +80,15 @@ namespace SkimiaOS.Server.BaseServer.Plugins
         }
         public virtual void Shutdown()
         {
+            MessageDispatcher.UnRegisterSharedAssembly(Context.PluginAssembly);
+
             Singleton<CommandManager>.Instance.UnRegisterAll(this.Context.PluginAssembly);
+
+            if (UseConfig)
+            {
+                Config.Save();
+                Config.RemoveAssembly(Context.PluginAssembly);
+            }
         }
         public abstract void Dispose();
         public virtual void LoadConfig()
@@ -101,7 +110,7 @@ namespace SkimiaOS.Server.BaseServer.Plugins
         }
         public virtual string GetConfigPath()
         {
-            return Path.Combine(this.GetPluginDirectory(), (!string.IsNullOrEmpty(this.ConfigFileName)) ? this.ConfigFileName : (this.Name.Replace(" ","_") + ".xml"));
+            return Path.Combine(this.GetPluginDirectory(), (!string.IsNullOrEmpty(this.ConfigFileName)) ? this.ConfigFileName : (this.Name.ToLower().Replace(" ","_") + ".xml"));
         }
         public string GetPluginDirectory()
         {

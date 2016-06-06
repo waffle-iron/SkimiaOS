@@ -73,6 +73,7 @@
     <Compile Include="APIServer.cs" />
     <Compile Include="Commands\Trigger\APIConsoleTrigger.cs" />
     <Compile Include="Definitions.cs" />
+    <Compile Include="Messages\APIServerInitializationMessage.cs" />
     <Compile Include="OWIN\APIServerBootstrapper.cs" />
     <Compile Include="OWIN\Startup.cs" />
     <Compile Include="OWIN\StatusCodeHandler.cs" />
