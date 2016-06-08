@@ -1,4 +1,5 @@
 ﻿using Nancy;
+using Nancy.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,11 @@ namespace SkimiaOS.Server.APIServer.OWIN
                 return null;
             });
 
+            
+        }
+        protected override DiagnosticsConfiguration DiagnosticsConfiguration
+        {
+            get { return new DiagnosticsConfiguration { Password = @"SkimiaOS" }; }
         }
     }
 }
