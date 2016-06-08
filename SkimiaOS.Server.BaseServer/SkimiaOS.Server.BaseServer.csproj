@@ -89,6 +89,8 @@
     <Compile Include="Initialization\InitializationMethod.cs" />
     <Compile Include="Initialization\InitializationPass.cs" />
     <Compile Include="Messages\BaseServerInitializationMessage.cs" />
+    <Compile Include="Messages\PluginRemovedMessage.cs" />
+    <Compile Include="Messages\PluginAddedMessage.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Plugins\PluginBase.cs" />
     <Compile Include="Plugins\PluginContext.cs" />

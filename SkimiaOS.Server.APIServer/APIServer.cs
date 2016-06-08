@@ -1,8 +1,12 @@
 ﻿using Microsoft.Owin.Hosting;
+using NLog;
 using SkimiaOS.Core.Config;
+using SkimiaOS.Core.Messages;
 using SkimiaOS.Server.APIServer.Messages;
 using SkimiaOS.Server.APIServer.OWIN;
 using SkimiaOS.Server.BaseServer;
+using SkimiaOS.Server.BaseServer.Plugins;
+using SkimiaOS.Server.BaseServer.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +14,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace SkimiaOS.Server.APIServer
 {
@@ -28,32 +33,46 @@ namespace SkimiaOS.Server.APIServer
 
         public override void Initialize()
         {
-            try
+
+            if(!Debugger.IsAttached)
+            {
+                try
+                {
+                    base.Initialize();
+                    this.init();
+                
+
+                }
+			    catch (Exception ex)
+			    {
+				    base.HandleCrashException(ex);
+				    base.Shutdown();
+                }
+            }else
             {
                 base.Initialize();
-
-                base.ConsoleInterface = new APIConsole();
-                APIConsole.SetTitle("#SkimiaOS API Server");
-
-                this.logger.Info("Register Commands...");
-                base.CommandManager.RegisterAll(Assembly.GetExecutingAssembly());
-
-                this.logger.Info("Initialisation...");
-                base.InitializationManager.InitializeAll();
-                base.IsInitialized = true;
-
-                var msg = new APIServerInitializationMessage();
-                DispatcherTask.Dispatcher.Enqueue(msg);
-
-                msg.Wait();
-
+                this.init();
             }
-			catch (Exception ex)
-			{
-				base.HandleCrashException(ex);
-				base.Shutdown();
-            }
+            
 
+        }
+
+        private void init()
+        {
+            base.ConsoleInterface = new APIConsole();
+            APIConsole.SetTitle("#SkimiaOS API Server");
+
+            this.logger.Info("Register Commands...");
+            base.CommandManager.RegisterAll(Assembly.GetExecutingAssembly());
+
+            this.logger.Info("Initialisation...");
+            base.InitializationManager.InitializeAll();
+            base.IsInitialized = true;
+
+            var msg = new APIServerInitializationMessage();
+            DispatcherTask.Dispatcher.Enqueue(msg, this);
+
+            msg.Wait();
         }
 
         public override void Start()
@@ -84,6 +103,18 @@ namespace SkimiaOS.Server.APIServer
             if(this.m_host != null)  
             this.m_host.Dispose();
             base.OnShutdown();
+        }
+
+        [MessageHandler(typeof(PluginRemovedMessage))]
+        public static void HandlePluginRemovedMessage(object sender, PluginRemovedMessage message)
+        {
+            LogManager.GetCurrentClassLogger().Info("HOOKPlugin Unloaded : {0}", message.PluginContext.Plugin.GetDefaultDescription());
+
+        }
+        [MessageHandler(typeof(PluginAddedMessage))]
+        public static void HandlePluginAddedMessage(object sender, PluginAddedMessage message)
+        {
+            LogManager.GetCurrentClassLogger().Info("HOOKPlugin Loaded : {0}", message.PluginContext.Plugin.GetDefaultDescription());
         }
     }
 }

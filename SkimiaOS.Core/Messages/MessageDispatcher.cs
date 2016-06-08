@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-
+using SkimiaOS.Core.Reflection;
 namespace SkimiaOS.Core.Messages
 {
     /// <summary>
@@ -189,11 +187,11 @@ namespace SkimiaOS.Core.Messages
             Action<object, object, Message> handlerDelegate;
             try
             {
-                handlerDelegate = (Action<object, object, Message>)method.CreateDelegate(typeof(object), typeof(Message));
+                handlerDelegate = (Action<object, object, Message>)method.CreateParamsDelegate(typeof(object), typeof(Message));
             }
             catch (Exception)
             {
-                throw new ArgumentException(string.Format("Method handler {0} has incorrect parameters. Right definition is Handler(object Message)", method));
+                throw new ArgumentException(string.Format("Method handler {0} has incorrect parameters. Right definition is Handler(object, Message)", method));
             }
 
             foreach (var attribute in attributes)
@@ -293,11 +291,11 @@ namespace SkimiaOS.Core.Messages
             Action<object, object, Message> handlerDelegate;
             try
             {
-                handlerDelegate = (Action<object, object, Message>)method.CreateDelegate(typeof(object), typeof(Message));
+                handlerDelegate = (Action<object, object, Message>)method.CreateParamsDelegate(typeof(object), typeof(Message));
             }
             catch (Exception)
             {
-                throw new ArgumentException(string.Format("Method handler {0} has incorrect parameters. Right definition is Handler(object Message)", method));
+                throw new ArgumentException(string.Format("Method handler {0} has incorrect parameters. Right definition is Handler(object, Message)", method));
             }
 
             foreach (var attribute in attributes)

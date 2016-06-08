@@ -219,6 +219,10 @@ namespace SkimiaOS.Server.BaseServer
             this.CommandManager = Singleton<CommandManager>.Instance;
             this.CommandManager.RegisterAll(Assembly.GetExecutingAssembly());
 
+            this.logger.Info("Starting Dispatcher...");
+            DispatcherTask = new DispatcherTask(new MessageDispatcher());
+            DispatcherTask.Start(); // we have to start it now to dispatch the initialization msg
+
             this.logger.Info("Register Initialization...");
             this.InitializationManager = Singleton<InitializationManager>.Instance;
             this.InitializationManager.AddAssemblies(AppDomain.CurrentDomain.GetAssemblies());
@@ -230,12 +234,8 @@ namespace SkimiaOS.Server.BaseServer
 
             this.CommandManager.LoadOrCreateCommandsInfo(ServerBase.CommandsInfoFilePath);
 
-            this.logger.Info("Starting Dispatcher...");
-            DispatcherTask = new DispatcherTask(new MessageDispatcher());
-            DispatcherTask.Start(); // we have to start it now to dispatch the initialization msg
-
             var msg = new BaseServerInitializationMessage();
-            DispatcherTask.Dispatcher.Enqueue(msg);
+            DispatcherTask.Dispatcher.Enqueue(msg, this);
 
             msg.Wait();
         }
@@ -299,10 +299,12 @@ namespace SkimiaOS.Server.BaseServer
         protected virtual void OnPluginRemoved(PluginContext plugincontext)
         {
             this.logger.Info("Plugin Unloaded : {0}", plugincontext.Plugin.GetDefaultDescription());
+            DispatcherTask.Dispatcher.Enqueue(new PluginRemovedMessage(plugincontext), this);
         }
         protected virtual void OnPluginAdded(PluginContext plugincontext)
         {
             this.logger.Info("Plugin Loaded : {0}", plugincontext.Plugin.GetDefaultDescription());
+            DispatcherTask.Dispatcher.Enqueue(new PluginAddedMessage(plugincontext), this);
         }
 
         private static void InitializeGarbageCollector()
@@ -366,7 +368,8 @@ namespace SkimiaOS.Server.BaseServer
 
         protected virtual void OnShutdown()
         {
-            this.IOTaskPool.Stop(false);
+            if(this.IOTaskPool != null)
+                this.IOTaskPool.Stop(false);
         }
         public virtual void ScheduleShutdown(TimeSpan timeBeforeShuttingDown, string reason)
         {
