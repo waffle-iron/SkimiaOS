@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SkimiaOS.Plugins.BasePlugin.Modules.Plugins
 {
-    [Table("blog_Article")]
+
     public class Plugin
     {
         public int ID { get; set; }
