@@ -14,7 +14,7 @@ namespace SkimiaOS.Core.Messages
     /// <typeparam name="T">Messsage dispatcher type</typeparam>
     public class MessageDispatcher
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         protected class MessageHandler
         {

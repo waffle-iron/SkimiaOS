@@ -66,6 +66,14 @@ namespace SkimiaOS.Core.Threading
             }
         }
 
+        public Task UpdateTask
+        {
+            get
+            {
+                return this.m_updateTask;
+            }
+        }
+
         public SelfRunningTaskPool(int interval, string name)
         {
             m_messageQueue = new LockFreeQueue<IMessage>();

@@ -60,7 +60,7 @@ namespace SkimiaOS.Core.Config
         /// <param name = "e">The <see cref = "System.Xml.Schema.ValidationEventArgs" /> instance containing the event data.</param>
         private static void ValidationEventHandler(object sender, ValidationEventArgs e)
         {
-            var elem = sender as XmlElement;
+            //var elem = sender as XmlElement;
 
             if (e.Severity == XmlSeverityType.Error)
             {
@@ -372,7 +372,7 @@ namespace SkimiaOS.Core.Config
         {
             // avoid multiple useless reallocations
             var assemblies = m_assemblies.Values.ToArray();
-            var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            //var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 
             foreach (ConfigNode xmlConfigNode in m_nodes.Values)
             {
