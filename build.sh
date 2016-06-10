@@ -1,1 +1,1 @@
-xbuild /p:Configuration=Release SkimiaOS.sln /p:TargetFrameworkVersion="v4.5.2" /p:DebugSymbols=False
+xbuild /p:Configuration=Release SkimiaOS.sln /p:TargetFrameworkVersion="v4.5" /p:DebugSymbols=False

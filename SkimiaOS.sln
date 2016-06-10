@@ -20,7 +20,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkimiaOS.Plugins.BasePlugin
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{278A3D20-FC91-44C9-AD77-1842CC74CF7B}"
 	ProjectSection(SolutionItems) = preProject
+		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
+		build.sh = build.sh
 		README.md = README.md
 	EndProjectSection
 EndProject
