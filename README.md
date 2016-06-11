@@ -7,8 +7,14 @@
 
 ### Using Docker
 
+#### compile
 ```
 wget https://raw.githubusercontent.com/kesslerdev/SkimiaOS/master/Dockerfile
 docker build -t skimiaos .
 docker run -p 80:8080 skimiaos
+```
+#### Docker Hub
+
+```
+docker run -p 80:8080 skimia/os
 ```
