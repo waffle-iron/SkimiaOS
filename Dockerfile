@@ -21,7 +21,7 @@ RUN chmod +x /home/skimiaos/scripts/build.sh
 RUN (cd /home/skimiaos/ ; sh ./scripts/build.sh)
 
 #run
-CMD [ "(cd /home/skimiaos/ ; sh ./scripts/run-docker.sh)" ]
+CMD [ "sh", "/home/skimiaos/scripts/run-docker.sh" ]
 
 #default config 
 EXPOSE 8080
