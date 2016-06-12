@@ -17,11 +17,11 @@ RUN cp -R /skimiaos/* /home/skimiaos/
 RUN nuget restore /home/skimiaos/SkimiaOS.sln
 
 #build
-RUN chmod +x /home/skimiaos/build.sh
-RUN (cd /home/skimiaos/ ; sh build.sh)
+RUN chmod +x /home/skimiaos/scripts/build.sh
+RUN (cd /home/skimiaos/ ; sh ./scripts/build.sh)
 
 #run
-CMD [ "mono",  "/home/skimiaos/SkimiaOS.CLI.ServerConsole/bin/Release/SkimiaOS.CLI.ServerConsole.exe" ]
+CMD [ "(cd /home/skimiaos/ ; sh ./scripts/run-docker.sh)" ]
 
 #default config 
 EXPOSE 8080
