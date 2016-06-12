@@ -6,16 +6,18 @@ namespace SkimiaOS.Core.Log
 {
     public static class NLogProfile
     {
-        public static string LogFormatConsole = "[${callsite:className=true:methodName=false:includeSourcePath=false:namespace=false}](${threadid}) ${message}";
+        public static string LogFormatConsole = "[${custom-callsite:opt=blockcenter:length=18:className=true:methodName=false:includeSourcePath=false:namespace=false}](${threadid}) ${message}";
+        public static string LogInitFormatConsole = "[${processtime}][${custom-callsite:opt=blockcenter:length=18:className=true:methodName=false:includeSourcePath=false:namespace=false}](${threadid}) ${message}";
         public static string LogFormatFile = "[${level}] <${date:format=G}> ${message}";
         public static readonly string LogFilePath = "/logs/";
 
         public static void DefineLogProfile(bool activefileLog, bool activeconsoleLog)
         {
+            ConfigurationItemFactory.Default.LayoutRenderers.RegisterDefinition("custom-callsite", typeof(Log.CustomCallSiteLayoutRenderer));
             LoggingConfiguration loggingConfiguration = new LoggingConfiguration();
             ColoredConsoleTarget target = new ColoredConsoleTarget
             {
-                Layout = NLogProfile.LogFormatConsole
+                Layout = NLogProfile.LogInitFormatConsole
             };
             FileTarget target2 = new FileTarget
             {
@@ -62,6 +64,12 @@ namespace SkimiaOS.Core.Log
         public static void DisableLogging()
         {
             LogManager.DisableLogging();
+        }
+
+        public static void disableInitialisation()
+        {
+            ColoredConsoleTarget target = LogManager.Configuration.FindTargetByName<ColoredConsoleTarget>("console");
+            target.Layout = NLogProfile.LogFormatConsole;
         }
     }
 }

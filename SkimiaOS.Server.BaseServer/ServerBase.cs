@@ -187,6 +187,8 @@ namespace SkimiaOS.Server.BaseServer
             ConsoleBase.DrawAsciiLogo();
             Console.WriteLine();
 
+            ConsoleBase.DrawLine("Initializing");
+
             //Set Mode of Garbage collection
             ServerBase.InitializeGarbageCollector();
 
@@ -358,6 +360,8 @@ namespace SkimiaOS.Server.BaseServer
 
         public virtual void Start()
         {
+            ConsoleBase.DrawLine("Starting");
+            NLogProfile.disableInitialisation();
             this.Running = true;
             this.Initializing = false;
 

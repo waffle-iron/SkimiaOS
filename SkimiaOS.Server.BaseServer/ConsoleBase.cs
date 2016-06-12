@@ -58,6 +58,20 @@ namespace SkimiaOS.Server.BaseServer
             Console.ForegroundColor = foregroundColor;
         }
 
+
+        public static void DrawLine(string str)
+        {
+            string line = "----------[ " + str + " ]----------";
+            ConsoleColor foregroundColor = Console.ForegroundColor;
+            ConsoleColor backgroundColor = Console.BackgroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            int totalWidth = (Console.BufferWidth + line.Length) / 2;
+            Console.WriteLine(line.PadLeft(totalWidth));
+
+
+            Console.ForegroundColor = foregroundColor;
+        }
+
         protected virtual void Process()
         {
         }
